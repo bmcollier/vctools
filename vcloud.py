@@ -3,7 +3,6 @@ import requests
 import base64
 import logging
 import pytest
-from vcloud_settings import settings
 
 class VCloudSession:
     
@@ -42,9 +41,6 @@ class VCloudSession:
     def get_catalogue(self):
         response = requests.get(self.endpoint + 'vms/query', data=None, headers = self.headers)
         return response.text
-        
-    def get_catalogue(self):
-        pass
     
     def list_vapps(self):
         payload = {"page": "1", "pageSize":"25", "format":"idrecords"}
@@ -75,11 +71,7 @@ class VCloudSession:
         response = requests.put(self.endpoint + "/vApp/" + vapp_id + "/virtualHardwareSection/memory", data=xmlstring, headers=self.headers)
         return response.text
 
-vc_session = VCloudSession(settings.username, settings.password, settings.organisation, settings.endpoint)
-print vc_session.last_status
-print vc_session.organisation_url()
-print vc_session.get_vapp('vapp-a88887a3-a15f-4f11-8482-993159b33ad8')
-#print vc_session.suspend_vapp('vapp-a88887a3-a15f-4f11-8482-993159b33ad8')
-#print vc_session.set_memory_config('vm-b8e95c38-b899-496e-bd6b-bcfec39fc52e')
-
-
+if __name__ == "__main__":
+    """Fire off main test if vcloudpy called directly"""
+    import tests.test_memchange
+    tests.test_memchange.test_main()

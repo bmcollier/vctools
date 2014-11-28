@@ -11,10 +11,11 @@ We then check that the machine is reporting its memory correctly (ie. the new va
 """
 from pytest import raises
 from vcloud_settings import settings
+import vcloud
 
-def test_1():
+def test_main():
     """Test routines for dev. Here temporarily"""
-    vc_session = VCloudSession(settings.username, settings.password, settings.organisation, settings.endpoint)
+    vc_session = vcloud.VCloudSession(settings.username, settings.password, settings.organisation, settings.endpoint)
     print vc_session.last_status
     print vc_session.organisation_url()
     print vc_session.get_vapp('vapp-a88887a3-a15f-4f11-8482-993159b33ad8')
