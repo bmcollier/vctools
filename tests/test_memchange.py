@@ -12,13 +12,23 @@ We then check that the machine is reporting its memory correctly (ie. the new va
 from pytest import raises
 from vcloud_settings import settings
 import vcloud
+from time import sleep
+
+class storeout:
+    def __init__(self, key):
+        self.actions = {}
+        self.key = key
+    def save(self, value):
+        self.actions[self.key] = value
 
 def test_main():
     """Test routines for dev. Here temporarily"""
-    vc_session = vcloud.VCloudSession(settings.username, settings.password, settings.organisation, settings.endpoint)
-    print vc_session.last_status
-    print vc_session.organisation_url()
-    print vc_session.get_vapp('vapp-a88887a3-a15f-4f11-8482-993159b33ad8')
-    #print vc_session.suspend_vapp('vapp-a88887a3-a15f-4f11-8482-993159b33ad8')
-    #print vc_session.set_memory_config('vm-b8e95c38-b899-496e-bd6b-bcfec39fc52e')
+    vm_id = 'vm-b8e95c38-b899-496e-bd6b-bcfec39fc52e'
+    kvstore = storeout(vm_id)
+    boost_thread = vcloud.boost("Boost Thread", vm_id, settings, kvstore)
+    boost_thread.start()
+    kvstore.actions[vm_id] = ""
+    while 1:
+        print kvstore.actions[vm_id]
+        sleep(0)
     assert 1==1;
