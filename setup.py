@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='vctools',
-    version='0.1.5',
+    version='0.1.6',
     author='B. Collier',
     author_email='bmcollier@gmail.com',
     packages=['vctools', 'vctools.test'],
